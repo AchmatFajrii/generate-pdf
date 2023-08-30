@@ -1,5 +1,3 @@
-// pages/api/exportPDF.tsx
-
 import puppeteer from "puppeteer";
 import { NextApiRequest, NextApiResponse } from "next";
 import { PaperFormat } from "puppeteer";
@@ -13,6 +11,9 @@ const exportPDF = async (req: NextApiRequest, res: NextApiResponse) => {
   const url = "http://localhost:3000/";
 
   await page.goto(url, { waitUntil: "networkidle2" });
+
+  // Menyembunyikan elemen dengan kelas .no-print
+  await page.addStyleTag({ content: '.no-print { display: none !important; }' });
 
   const pdfConfig = {
     format: paperSize as PaperFormat || "A4",
